@@ -7,9 +7,9 @@ local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local Wrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
 
 local next = next
-
-local IsSpellKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown
+local CreateFrame = CreateFrame
 local IsPlayerSpell = IsPlayerSpell
+local IsSpellKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown
 
 local GetCVar = C_CVar.GetCVar
 local SetCVar = C_CVar.SetCVar
@@ -1115,7 +1115,14 @@ do
 		end
 	end
 
-	local frame = CreateFrame('Frame')
+	-- setup events
+	if not lib.frame then
+		lib.frame = CreateFrame('Frame')
+	else -- we are resetting it
+		lib.frame:UnregisterAllEvents()
+	end
+
+	local frame = lib.frame
 	frame:SetScript('OnEvent', UpdateDispels)
 	frame:RegisterEvent('CHARACTER_POINTS_CHANGED')
 	frame:RegisterEvent('PLAYER_LOGIN')
