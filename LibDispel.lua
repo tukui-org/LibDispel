@@ -1,10 +1,11 @@
-local MAJOR, MINOR = "LibDispel-1.0", 6
+local MAJOR, MINOR = "LibDispel-1.0", 7
 assert(LibStub, MAJOR.." requires LibStub")
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
 
 local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local Wrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+local Cata = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
+local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 
 local next = next
 local CreateFrame = CreateFrame
@@ -1056,6 +1057,11 @@ do
 		end
 	end
 
+	local function CheckTalentClassic(tabIndex, talentIndex)
+		local _, _, _, _, rank = GetTalentInfo(tabIndex, talentIndex)
+		return rank > 0 or nil
+	end
+
 	local function UpdateDispels(_, event, arg1)
 		if event == 'CHARACTER_POINTS_CHANGED' and arg1 > 0 then
 			return -- Not interested in gained points from leveling
@@ -1094,12 +1100,13 @@ do
 		elseif myClass == 'SHAMAN' then
 			local purify = Retail and CheckSpell(77130) -- Purify Spirit
 			local cleanse = purify or CheckSpell(51886) -- Cleanse Spirit
-			local toxins = Retail and CheckSpell(383013) or CheckSpell(526) -- Poison Cleansing Totem (Retail), Cure Toxins (TBC/Classic)
+			local improvedCleanse = Cata and CheckTalentClassic(3, 14) -- Improved Cleanse Spirit
+			local toxins = Retail and CheckSpell(383013) or CheckSpell(526) -- Poison Cleansing Totem (Retail), Cure Toxins (Classic)
 
-			DispelList.Magic = purify
+			DispelList.Magic = purify or (Cata and cleanse and improvedCleanse)
 			DispelList.Curse = cleanse
-			DispelList.Poison = toxins or (not Retail and cleanse)
-			DispelList.Disease = not Retail and (cleanse or toxins)
+			DispelList.Poison = toxins
+			DispelList.Disease = Classic and toxins
 		elseif myClass == 'EVOKER' then
 			local naturalize = CheckSpell(360823) -- Naturalize (Preservation)
 			local expunge = CheckSpell(365585) -- Expunge (Devastation)
@@ -1133,7 +1140,7 @@ do
 		frame:RegisterUnitEvent('UNIT_PET', 'player')
 	end
 
-	if Wrath then
+	if Cata then
 		frame:RegisterEvent('PLAYER_TALENT_UPDATE')
 	elseif Retail then
 		frame:RegisterEvent('LEARNED_SPELL_IN_TAB')
