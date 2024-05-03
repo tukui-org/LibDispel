@@ -1102,11 +1102,13 @@ do
 			local cleanse = purify or CheckSpell(51886) -- Cleanse Spirit
 			local improvedCleanse = Cata and CheckTalentClassic(3, 14) -- Improved Cleanse Spirit
 			local toxins = Retail and CheckSpell(383013) or CheckSpell(526) -- Poison Cleansing Totem (Retail), Cure Toxins (Classic)
+			local cureDisease = Classic and CheckSpell(2870) -- Cure Disease
+			local diseaseTotem = Classic and CheckSpell(8170) -- Disease Cleansing Totem
 
 			DispelList.Magic = purify or (Cata and cleanse and improvedCleanse)
 			DispelList.Curse = cleanse
 			DispelList.Poison = toxins
-			DispelList.Disease = Classic and toxins
+			DispelList.Disease = cureDisease or diseaseTotem
 		elseif myClass == 'EVOKER' then
 			local naturalize = CheckSpell(360823) -- Naturalize (Preservation)
 			local expunge = CheckSpell(365585) -- Expunge (Devastation)
