@@ -4,11 +4,12 @@ local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
 
 local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
-local Cata = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local Cata = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 
 local next = next
 local CreateFrame = CreateFrame
+local GetTalentInfo = GetTalentInfo
 local IsPlayerSpell = IsPlayerSpell
 local IsSpellKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown
 
@@ -1059,7 +1060,7 @@ do
 
 	local function CheckTalentClassic(tabIndex, talentIndex)
 		local _, _, _, _, rank = GetTalentInfo(tabIndex, talentIndex)
-		return rank > 0 or nil
+		return (rank and rank > 0) or nil
 	end
 
 	local function UpdateDispels(_, event, arg1)
@@ -1099,13 +1100,13 @@ do
 			DispelList.Disease = Retail and (IsPlayerSpell(390632) or CheckSpell(213634)) or not Retail and (CheckSpell(552) or CheckSpell(528)) -- Purify Disease / Abolish Disease / Cure Disease
 		elseif myClass == 'SHAMAN' then
 			local purify = Retail and CheckSpell(77130) -- Purify Spirit
-			local cleanse = purify or CheckSpell(51886) -- Cleanse Spirit
-			local improvedCleanse = Cata and CheckTalentClassic(3, 14) -- Improved Cleanse Spirit
+			local cleanse = purify or CheckSpell(51886) -- Cleanse Spirit (Retail/Cata)
+			local improvedCleanse = Cata and cleanse and CheckTalentClassic(3, 14) -- Improved Cleanse Spirit
 			local toxins = Retail and CheckSpell(383013) or CheckSpell(526) -- Poison Cleansing Totem (Retail), Cure Toxins (Classic)
 			local cureDisease = Classic and CheckSpell(2870) -- Cure Disease
 			local diseaseTotem = Classic and CheckSpell(8170) -- Disease Cleansing Totem
 
-			DispelList.Magic = purify or (Cata and cleanse and improvedCleanse)
+			DispelList.Magic = purify or improvedCleanse
 			DispelList.Curse = cleanse
 			DispelList.Poison = toxins
 			DispelList.Disease = cureDisease or diseaseTotem
