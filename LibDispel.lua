@@ -1091,7 +1091,7 @@ do
 			local cleanse = CheckSpell(4987) -- Cleanse
 			local purify = CheckSpell(1152) -- Purify
 			local toxins = cleanse or purify or CheckSpell(213644) -- Cleanse Toxins
-			DispelList.Magic = cleanse
+			DispelList.Magic = cleanse and (not Cata or CheckTalentClassic(1, 7)) -- Sacred Cleansing
 			DispelList.Poison = toxins
 			DispelList.Disease = toxins
 		elseif myClass == 'PRIEST' then
