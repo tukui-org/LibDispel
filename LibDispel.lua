@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 8
+local MAJOR, MINOR = "LibDispel-1.0", 9
 assert(LibStub, MAJOR.." requires LibStub")
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
@@ -1074,11 +1074,11 @@ do
 		if event == 'UNIT_PET' then
 			DispelList.Magic = CheckPetSpells()
 		elseif myClass == 'DRUID' then
-			local cure = Retail and CheckSpell(88423) -- Nature's Cure
-			local corruption = CheckSpell(2782) -- Remove Corruption (retail), Curse (classic)
-			DispelList.Magic = cure
+			local cure = Retail and CheckSpell(88423) -- Nature's Cure Spell
+			local corruption = CheckSpell(2782) -- Remove Corruption (retail), Remove Curse (classic)
+			DispelList.Magic = cure or (Cata and corruption and CheckTalentClassic(3, 15)) -- Nature's Cure Talent
+			DispelList.Poison = cure or (not Classic and corruption) or CheckSpell(2893) or CheckSpell(8946) -- Abolish Poison / Cure Poison
 			DispelList.Curse = cure or corruption
-			DispelList.Poison = cure or (Retail and corruption) or CheckSpell(2893) or CheckSpell(8946) -- Abolish Poison / Cure Poison
 		elseif myClass == 'MAGE' then
 			DispelList.Curse = CheckSpell(475) -- Remove Curse
 		elseif myClass == 'MONK' then
