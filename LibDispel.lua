@@ -1080,7 +1080,9 @@ do
 			DispelList.Poison = cure or (not Classic and corruption) or CheckSpell(2893) or CheckSpell(8946) -- Abolish Poison / Cure Poison
 			DispelList.Curse = cure or corruption
 		elseif myClass == 'MAGE' then
-			DispelList.Curse = CheckSpell(475) -- Remove Curse
+			local greater = CheckSpell(412113)
+			DispelList.Curse = greater or CheckSpell(475) -- Remove Curse
+			DispelList.Magic = greater
 		elseif myClass == 'MONK' then
 			local mwDetox = CheckSpell(115450) -- Detox (Mistweaver)
 			local detox = mwDetox or CheckSpell(218164) -- Detox (Brewmaster or Windwalker)
