@@ -1116,8 +1116,9 @@ do
 			local naturalize = CheckSpell(360823) -- Naturalize (Preservation)
 			local expunge = CheckSpell(365585) -- Expunge (Devastation)
 			local cauterizing = CheckSpell(374251) -- Cauterizing Flame
+			local scouringFlame = CheckSpell(378438) -- Scouring Flame (PvP Talent)
 
-			DispelList.Magic = naturalize
+			DispelList.Magic = naturalize or scouringFlame
 			DispelList.Poison = naturalize or expunge or cauterizing
 			DispelList.Disease = cauterizing
 			DispelList.Curse = cauterizing
