@@ -1064,7 +1064,7 @@ do
 	end
 
 	local function UpdateDispels(_, event, arg1)
-		if event == 'CHARACTER_POINTS_CHANGED' and arg1 and arg1 > 0 then
+		if event == 'CHARACTER_POINTS_CHANGED' and (not arg1 or arg1 > 0) then
 			return -- Not interested in gained points from leveling
 		end
 
@@ -1141,7 +1141,7 @@ do
 	frame:SetScript('OnEvent', UpdateDispels)
 	frame:RegisterEvent('CHARACTER_POINTS_CHANGED')
 	frame:RegisterEvent('LEARNED_SPELL_IN_TAB')
-	frame:RegisterEvent('PLAYER_LOGIN')
+	frame:RegisterEvent('SPELLS_CHANGED')
 
 	if myClass == 'WARLOCK' then
 		frame:RegisterUnitEvent('UNIT_PET', 'player')
