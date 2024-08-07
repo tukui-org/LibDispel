@@ -1143,13 +1143,11 @@ do
 	frame:RegisterEvent('LEARNED_SPELL_IN_TAB')
 	frame:RegisterEvent('SPELLS_CHANGED')
 
-	if myClass == 'WARLOCK' then
-		frame:RegisterUnitEvent('UNIT_PET', 'player')
+	if Retail or Cata then
+		frame:RegisterEvent('PLAYER_TALENT_UPDATE')
 	end
 
-	if Cata then
-		frame:RegisterEvent('PLAYER_TALENT_UPDATE')
-	elseif Retail then
-		frame:RegisterUnitEvent('PLAYER_SPECIALIZATION_CHANGED', 'player')
+	if myClass == 'WARLOCK' then
+		frame:RegisterUnitEvent('UNIT_PET', 'player')
 	end
 end
