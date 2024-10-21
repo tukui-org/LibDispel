@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 10
+local MAJOR, MINOR = "LibDispel-1.0", 11
 assert(LibStub, MAJOR.." requires LibStub")
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
