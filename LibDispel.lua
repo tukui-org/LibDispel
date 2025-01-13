@@ -890,6 +890,7 @@ if Retail then
 	BleedList[381692] = "Swift Stab"
 	BleedList[384134] = "Pierce"
 	BleedList[384148] = "Ensnaring Trap"
+	BleedList[384366] = "Talon Rake"
 	BleedList[384575] = "Crippling Bite"
 	BleedList[385042] = "Gushing Wound"
 	BleedList[385060] = "Odyn's Fury"
