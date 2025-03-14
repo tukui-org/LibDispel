@@ -30,7 +30,11 @@ local function GetList(name, data)
 
 	if data then -- import color data
 		for key, value in next, data do
-			list[key] = CopyTable(value)
+			if type(value) == 'table' then
+				list[key] = CopyTable(value)
+			else
+				list[key] = value
+			end
 		end
 	end
 
