@@ -1271,7 +1271,7 @@ do
 
 	local function CheckPetSpells()
 		for spellID in next, WarlockPetSpells do
-			if CheckSpell(spellID, true) then
+			if CheckSpell(spellID, Retail and 1 or true) then
 				return true
 			end
 		end
