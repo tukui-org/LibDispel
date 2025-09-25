@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 19
+local MAJOR, MINOR = "LibDispel-1.0", 20
 assert(LibStub, MAJOR.." requires LibStub")
 
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
@@ -1233,6 +1233,8 @@ if Retail then
 	BleedList[1237602] = "Gushing Wound"
 	BleedList[1239906] = "Phantom Strikes"
 	BleedList[1248211] = "Phase Slash"
+	BleedList[1253240] = "Corruption of the Engorged"
+	BleedList[1255245] = "Twilight Slash"
 end
 
 function lib:GetDebuffTypeColor()
