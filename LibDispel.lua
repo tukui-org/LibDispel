@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 24
+local MAJOR, MINOR = "LibDispel-1.0", 25
 assert(LibStub, MAJOR.." requires LibStub")
 
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
@@ -25,6 +25,12 @@ local Mists = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
 local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 local Midnight = wowtoc >= 120000
+
+local function SetList(object, key, value)
+	if object[key] then return end
+
+	object[key] = CopyTable(value)
+end
 
 local function GetList(name, data)
 	local list = lib[name]
@@ -53,28 +59,16 @@ local BlockList = GetList('BlockList') -- Spells blocked from AuraHighlight
 local DispelList = GetList('DispelList') -- List of types the player can dispel
 local DebuffColors = GetList('DebuffTypeColor', _G.DebuffTypeColor)
 
-if not DebuffColors.None then
-	DebuffColors.None = _G.DEBUFF_TYPE_NONE_COLOR or { r = 0.8, g = 0, b = 0 }
-end
-if not DebuffColors.Magic then
-	DebuffColors.Magic = _G.DEBUFF_TYPE_MAGIC_COLOR or { r = 0.2, g = 0.6, b = 1 }
-end
-if not DebuffColors.Curse then
-	DebuffColors.Curse = _G.DEBUFF_TYPE_CURSE_COLOR or { r = 0.6, g = 0, b = 1 }
-end
-if not DebuffColors.Disease then
-	DebuffColors.Disease = _G.DEBUFF_TYPE_DISEASE_COLOR or { r = 0.6, g = 0.4, b = 0 }
-end
-if not DebuffColors.Poison then
-	DebuffColors.Poison = _G.DEBUFF_TYPE_POISON_COLOR or { r = 0, g = 0.6, b = 0 }
-end
-
-DebuffColors.Bleed = _G.DEBUFF_TYPE_BLEED_COLOR or { r = 0.6, g = 0, b = 0.1 }
-
-DebuffColors.Enrage = { r = 0.95, g = 0.37, b = 0.96 } -- oUF colors
-DebuffColors.EnemyNPC = { r = 0.9, g = 0.1, b = 0.1 }
-DebuffColors.BadDispel = { r = 0.05, g = 0.85, b = 0.94 }
-DebuffColors.Stealable = { r = 0.93, g = 0.91, b = 0.55 }
+SetList(DebuffColors, 'None', _G.DEBUFF_TYPE_NONE_COLOR or { r = 0.8, g = 0, b = 0 })
+SetList(DebuffColors, 'Magic', _G.DEBUFF_TYPE_MAGIC_COLOR or { r = 0.2, g = 0.6, b = 1 })
+SetList(DebuffColors, 'Curse', _G.DEBUFF_TYPE_CURSE_COLOR or { r = 0.6, g = 0, b = 1 })
+SetList(DebuffColors, 'Disease', _G.DEBUFF_TYPE_DISEASE_COLOR or { r = 0.6, g = 0.4, b = 0 })
+SetList(DebuffColors, 'Poison', _G.DEBUFF_TYPE_POISON_COLOR or { r = 0, g = 0.6, b = 0 })
+SetList(DebuffColors, 'Bleed',  _G.DEBUFF_TYPE_BLEED_COLOR or { r = 0.6, g = 0, b = 0.1 })
+SetList(DebuffColors, 'Enrage', { r = 0.95, g = 0.37, b = 0.96 })
+SetList(DebuffColors, 'EnemyNPC', { r = 0.9, g = 0.1, b = 0.1 })
+SetList(DebuffColors, 'BadDispel', { r = 0.05, g = 0.85, b = 0.94 })
+SetList(DebuffColors, 'Stealable', { r = 0.93, g = 0.91, b = 0.55 })
 
 if Retail then
 	-- Bad to dispel spells
