@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 27
+local MAJOR, MINOR = "LibDispel-1.0", 28
 assert(LibStub, MAJOR.." requires LibStub")
 
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
@@ -219,7 +219,7 @@ do
 	frame:RegisterEvent('CHARACTER_POINTS_CHANGED')
 	frame:RegisterEvent('SPELLS_CHANGED')
 
-	if Retail or TBC then
+	if Retail or TBC or Wrath then
 		frame:RegisterEvent('LEARNED_SPELL_IN_SKILL_LINE')
 	else
 		frame:RegisterEvent('LEARNED_SPELL_IN_TAB')
