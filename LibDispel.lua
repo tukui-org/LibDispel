@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 28
+local MAJOR, MINOR = "LibDispel-1.0", 29
 assert(LibStub, MAJOR.." requires LibStub")
 
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
@@ -24,6 +24,7 @@ local Wrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
 local Mists = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
 local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local MistsPTR = wowtoc >= 50504 and wowtoc < 60000
 
 local function SetList(object, key, value)
 	if object[key] then return end
@@ -219,7 +220,7 @@ do
 	frame:RegisterEvent('CHARACTER_POINTS_CHANGED')
 	frame:RegisterEvent('SPELLS_CHANGED')
 
-	if Retail or TBC or Wrath then
+	if Retail or TBC or Wrath or MistsPTR then
 		frame:RegisterEvent('LEARNED_SPELL_IN_SKILL_LINE')
 	else
 		frame:RegisterEvent('LEARNED_SPELL_IN_TAB')
