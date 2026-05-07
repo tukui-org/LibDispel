@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 29
+local MAJOR, MINOR = "LibDispel-1.0", 30
 assert(LibStub, MAJOR.." requires LibStub")
 
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
@@ -156,6 +156,10 @@ do
 			DispelList.Magic = cure
 			DispelList.Poison = cure or (not vanilla and corruption) or CheckSpell(2893) or CheckSpell(8946) -- Abolish Poison / Cure Poison
 			DispelList.Curse = cure or corruption
+		elseif myClass == 'HUNTER' then
+			local salve = Retail and IsSpellKnown(459517)
+			DispelList.Poison = salve
+			DispelList.Disease = salve
 		elseif myClass == 'MAGE' then
 			local greater = CheckSpell(412113)
 			DispelList.Curse = greater or CheckSpell(475) -- Remove Curse
