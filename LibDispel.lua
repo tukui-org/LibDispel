@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibDispel-1.0", 30
+local MAJOR, MINOR = "LibDispel-1.0", 31
 assert(LibStub, MAJOR.." requires LibStub")
 
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
@@ -221,14 +221,9 @@ do
 
 	local frame = lib.frame
 	frame:SetScript('OnEvent', UpdateDispels)
+	frame:RegisterEvent('LEARNED_SPELL_IN_SKILL_LINE')
 	frame:RegisterEvent('CHARACTER_POINTS_CHANGED')
 	frame:RegisterEvent('SPELLS_CHANGED')
-
-	if Retail or TBC or Wrath or MistsPTR then
-		frame:RegisterEvent('LEARNED_SPELL_IN_SKILL_LINE')
-	else
-		frame:RegisterEvent('LEARNED_SPELL_IN_TAB')
-	end
 
 	if not Classic then
 		frame:RegisterEvent('PLAYER_TALENT_UPDATE')
