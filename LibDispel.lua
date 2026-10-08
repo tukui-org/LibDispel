@@ -24,6 +24,7 @@ local Wrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
 local Mists = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
 local Retail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 local Classic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+local Forever = WOW_PROJECT_ID == WOW_PROJECT_CAMELOT
 
 local function CopyColor(color)
 	-- some addons might replace these tables
@@ -63,8 +64,6 @@ local function GetList(name, data)
 	return list
 end
 
-local BadList = GetList('BadList') -- Spells that backfire when dispelled
-local BlockList = GetList('BlockList') -- Spells blocked from AuraHighlight
 local DispelList = GetList('DispelList') -- List of types the player can dispel
 local DebuffColors = GetList('DebuffTypeColor', _G.DebuffTypeColor)
 
@@ -78,32 +77,8 @@ SetList(DebuffColors, 'Enrage', { r = 0.95, g = 0.37, b = 0.96, a = 1 })
 SetList(DebuffColors, 'BadDispel', { r = 0.05, g = 0.85, b = 0.94, a = 1 })
 SetList(DebuffColors, 'Stealable', { r = 0.93, g = 0.91, b = 0.55, a = 1 })
 
-if Retail then
-	-- Bad to dispel spells
-	BadList[34914] = "Vampiric Touch"		-- horrifies
-	BadList[233490] = "Unstable Affliction"	-- silences
-
-	-- Block spells from AuraHighlight
-	BlockList[140546] = "Fully Mutated"
-	BlockList[136184] = "Thick Bones"
-	BlockList[136186] = "Clear Mind"
-	BlockList[136182] = "Improved Synapses"
-	BlockList[136180] = "Keen Eyesight"
-	BlockList[105171] = "Deep Corruption"
-	BlockList[108220] = "Deep Corruption"
-	BlockList[116095] = "Disable" -- slow
-end
-
 function lib:GetDebuffTypeColor()
 	return DebuffColors
-end
-
-function lib:GetBadList()
-	return BadList
-end
-
-function lib:GetBlockList()
-	return BlockList
 end
 
 function lib:GetMyDispelTypes()
@@ -124,7 +99,7 @@ do
 		[89808] = "Singe"
 	}
 
-	local vanilla = Classic or TBC or Wrath
+	local vanilla = Classic or TBC or Wrath or Forever
 	if vanilla then
 		WarlockPetSpells[19505] = "Devour Magic Rank 1"
 		WarlockPetSpells[19731] = "Devour Magic Rank 2"
