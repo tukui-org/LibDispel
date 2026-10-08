@@ -74,7 +74,6 @@ SetList(DebuffColors, 'Disease', _G.DEBUFF_TYPE_DISEASE_COLOR or { r = 0.6, g = 
 SetList(DebuffColors, 'Poison', _G.DEBUFF_TYPE_POISON_COLOR or { r = 0, g = 0.6, b = 0, a = 1 })
 SetList(DebuffColors, 'Bleed',  _G.DEBUFF_TYPE_BLEED_COLOR or { r = 0.6, g = 0, b = 0.1, a = 1 })
 SetList(DebuffColors, 'Enrage', { r = 0.95, g = 0.37, b = 0.96, a = 1 })
-SetList(DebuffColors, 'BadDispel', { r = 0.05, g = 0.85, b = 0.94, a = 1 })
 SetList(DebuffColors, 'Stealable', { r = 0.93, g = 0.91, b = 0.55, a = 1 })
 
 function lib:GetDebuffTypeColor()
