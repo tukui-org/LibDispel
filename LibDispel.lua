@@ -123,13 +123,25 @@ do
 		end
 	end
 
+	local ranksUpdate
 	local function UpdateDispels(_, event, arg1)
-		if event == 'CHARACTER_POINTS_CHANGED' and (not arg1 or arg1 > 0) then
-			return -- Not interested in gained points from leveling
+		if event == 'CHARACTER_POINTS_CHANGED' then
+			if not arg1 or arg1 > 0 then
+				return -- Not interested in gained points from leveling
+			end
+		elseif event == 'SPELLS_CHANGED' then
+			if ranksUpdate then
+				ranksUpdate = nil
+
+				return
+			end
 		end
 
-		-- this will fix a problem where spells dont show as existing because they are 'hidden'
-		local undoRanks = (vanilla and GetCVar('ShowAllSpellRanks') ~= '1') and SetCVar('ShowAllSpellRanks', '1')
+		local ranksUndo -- this will fix a problem where spells dont show as existing because they are 'hidden'
+		if vanilla and GetCVar('ShowAllSpellRanks') ~= '1' then
+			ranksUpdate = true -- keep this out of an infinite loop
+			ranksUndo = SetCVar('ShowAllSpellRanks', '1')
+		end
 
 		if event == 'UNIT_PET' then
 			DispelList.Magic = CheckPetSpells()
@@ -190,7 +202,7 @@ do
 
 		lib:ListUpdated()
 
-		if undoRanks then
+		if ranksUndo then
 			SetCVar('ShowAllSpellRanks', '0')
 		end
 	end
